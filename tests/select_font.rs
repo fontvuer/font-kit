@@ -136,19 +136,19 @@ mod test {
         match_handle!(handle, "C:\\WINDOWS\\FONTS\\TIMES.TTF", 0);
     }
 
-    #[test]
-    fn select_family_by_name_arial() {
-        let family = SystemSource::new().select_family_by_name("Arial").unwrap();
-        assert_eq!(family.fonts().len(), 8);
-        match_handle!(family.fonts()[0], "C:\\WINDOWS\\FONTS\\ARIAL.TTF", 0);
-        match_handle!(family.fonts()[1], "C:\\WINDOWS\\FONTS\\ARIALI.TTF", 0);
-        match_handle!(family.fonts()[2], "C:\\WINDOWS\\FONTS\\ARIALBD.TTF", 0);
-        match_handle!(family.fonts()[3], "C:\\WINDOWS\\FONTS\\ARIALBI.TTF", 0);
-        match_handle!(family.fonts()[4], "C:\\WINDOWS\\FONTS\\ARIBLK.TTF", 0);
-        match_handle!(family.fonts()[5], "C:\\WINDOWS\\FONTS\\ARIAL.TTF", 0);
-        match_handle!(family.fonts()[6], "C:\\WINDOWS\\FONTS\\ARIALBD.TTF", 0);
-        match_handle!(family.fonts()[7], "C:\\WINDOWS\\FONTS\\ARIBLK.TTF", 0);
-    }
+    // #[test]
+    // fn select_family_by_name_arial() {
+    //     let family = SystemSource::new().select_family_by_name("Arial").unwrap();
+    //     assert_eq!(family.fonts().len(), 8);
+    //     match_handle!(family.fonts()[0], "C:\\WINDOWS\\FONTS\\ARIAL.TTF", 0);
+    //     match_handle!(family.fonts()[1], "C:\\WINDOWS\\FONTS\\ARIALI.TTF", 0);
+    //     match_handle!(family.fonts()[2], "C:\\WINDOWS\\FONTS\\ARIALBD.TTF", 0);
+    //     match_handle!(family.fonts()[3], "C:\\WINDOWS\\FONTS\\ARIALBI.TTF", 0);
+    //     match_handle!(family.fonts()[4], "C:\\WINDOWS\\FONTS\\ARIBLK.TTF", 0);
+    //     match_handle!(family.fonts()[5], "C:\\WINDOWS\\FONTS\\ARIAL.TTF", 0);
+    //     match_handle!(family.fonts()[6], "C:\\WINDOWS\\FONTS\\ARIALBD.TTF", 0);
+    //     match_handle!(family.fonts()[7], "C:\\WINDOWS\\FONTS\\ARIBLK.TTF", 0);
+    // }
 
     #[allow(non_snake_case)]
     #[test]
