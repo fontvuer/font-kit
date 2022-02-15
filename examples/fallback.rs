@@ -21,16 +21,16 @@ static SANS_SERIF_FONT_REGULAR_POSTSCRIPT_NAME: &'static str = "ArialMT";
 #[cfg(not(any(target_family = "windows", target_os = "macos")))]
 static SANS_SERIF_FONT_REGULAR_POSTSCRIPT_NAME: &'static str = "DejaVuSans";
 
-fn get_args() -> ArgMatches<'static> {
-    let postscript_name_arg = Arg::with_name("POSTSCRIPT-NAME")
+fn get_args() -> ArgMatches {
+    let postscript_name_arg = Arg::new("POSTSCRIPT-NAME")
         .help("PostScript name of the font")
         .default_value(SANS_SERIF_FONT_REGULAR_POSTSCRIPT_NAME)
         .index(1);
-    let text_arg = Arg::with_name("TEXT")
+    let text_arg = Arg::new("TEXT")
         .help("Text to query")
         .default_value("A")
         .index(2);
-    let locale_arg = Arg::with_name("LOCALE")
+    let locale_arg = Arg::new("LOCALE")
         .help("Locale for fallback query")
         .default_value("en-US")
         .index(3);

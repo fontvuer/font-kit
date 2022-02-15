@@ -26,45 +26,45 @@ static SANS_SERIF_FONT_REGULAR_POSTSCRIPT_NAME: &'static str = "ArialMT";
 #[cfg(not(any(target_family = "windows", target_os = "macos")))]
 static SANS_SERIF_FONT_REGULAR_POSTSCRIPT_NAME: &'static str = "DejaVuSans";
 
-fn get_args() -> ArgMatches<'static> {
-    let postscript_name_arg = Arg::with_name("POSTSCRIPT-NAME")
+fn get_args() -> ArgMatches {
+    let postscript_name_arg = Arg::new("POSTSCRIPT-NAME")
         .help("PostScript name of the font")
         .default_value(SANS_SERIF_FONT_REGULAR_POSTSCRIPT_NAME)
         .index(1);
-    let glyph_arg = Arg::with_name("GLYPH")
+    let glyph_arg = Arg::new("GLYPH")
         .help("Character to render")
         .default_value("A")
         .index(2);
-    let size_arg = Arg::with_name("SIZE")
+    let size_arg = Arg::new("SIZE")
         .help("Font size in blocks")
         .default_value("32")
         .index(3);
-    let grayscale_arg = Arg::with_name("grayscale")
+    let grayscale_arg = Arg::new("grayscale")
         .long("grayscale")
         .help("Use grayscale antialiasing (default)");
-    let bilevel_arg = Arg::with_name("bilevel")
+    let bilevel_arg = Arg::new("bilevel")
         .help("Use bilevel (black & white) rasterization")
-        .short("b")
+        .short('b')
         .long("bilevel");
-    let subpixel_arg = Arg::with_name("subpixel")
+    let subpixel_arg = Arg::new("subpixel")
         .help("Use subpixel (LCD) rasterization")
-        .short("s")
+        .short('s')
         .long("subpixel");
-    let hinting_arg = Arg::with_name("hinting")
+    let hinting_arg = Arg::new("hinting")
         .help("Select hinting type")
-        .short("H")
+        .short('H')
         .long("hinting")
         .takes_value(true)
         .possible_value("none")
         .possible_value("vertical")
         .possible_value("full")
         .value_names(&["TYPE"]);
-    let transform_arg = Arg::with_name("transform")
+    let transform_arg = Arg::new("transform")
         .help("Transform to apply to glyph when rendering")
         .long("transform")
         .number_of_values(4);
     let rasterization_mode_group =
-        ArgGroup::with_name("rasterization-mode").args(&["grayscale", "bilevel", "subpixel"]);
+        ArgGroup::new("rasterization-mode").args(&["grayscale", "bilevel", "subpixel"]);
     App::new("render-glyph")
         .version("0.1")
         .author("The Pathfinder Project Developers")
