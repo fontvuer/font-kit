@@ -19,7 +19,7 @@ use core_graphics::geometry::{CGAffineTransform, CGPoint, CGRect, CGSize};
 use core_graphics::geometry::{CG_AFFINE_TRANSFORM_IDENTITY, CG_ZERO_POINT, CG_ZERO_SIZE};
 use core_graphics::path::CGPathElementType;
 use core_text;
-use core_text::font::CTFont;
+use core_text::font::{CTFont, CTFontNameSpecifier};
 use core_text::font_descriptor::kCTFontDefaultOrientation;
 use core_text::font_descriptor::{SymbolicTraitAccessors, TraitAccessors};
 use log::warn;
@@ -225,6 +225,66 @@ impl Font {
     #[inline]
     pub fn style_name(&self) -> String {
         self.core_text_font.style_name()
+    }
+
+    #[inline]
+    fn copyright_notice(&self) -> Option<String> {
+        self.core_text_font.get_string_by_name_key(CTFontNameSpecifier::Copyright)
+    }
+
+    #[inline]
+    fn subfamily_name(&self) -> Option<String> {
+        self.core_text_font.get_string_by_name_key(CTFontNameSpecifier::Copyright)
+    }
+
+    #[inline]
+    fn version(&self) -> Option<String> {
+        self.core_text_font.get_string_by_name_key(CTFontNameSpecifier::Copyright)
+    }
+
+    #[inline]
+    fn trademark(&self) -> Option<String> {
+        self.core_text_font.get_string_by_name_key(CTFontNameSpecifier::Copyright)
+    }
+
+    #[inline]
+    fn manufacturer(&self) -> Option<String> {
+        self.core_text_font.get_string_by_name_key(CTFontNameSpecifier::Copyright)
+    }
+
+    #[inline]
+    fn designer(&self) -> Option<String> {
+        self.core_text_font.get_string_by_name_key(CTFontNameSpecifier::Copyright)
+    }
+
+    #[inline]
+    fn description(&self) -> Option<String> {
+        self.core_text_font.get_string_by_name_key(CTFontNameSpecifier::Copyright)
+    }
+
+    #[inline]
+    fn vendor_url(&self) -> Option<String> {
+        self.core_text_font.get_string_by_name_key(CTFontNameSpecifier::Copyright)
+    }
+
+    #[inline]
+    fn designer_url(&self) -> Option<String> {
+        self.core_text_font.get_string_by_name_key(CTFontNameSpecifier::Copyright)
+    }
+
+    #[inline]
+    fn license_description(&self) -> Option<String> {
+        self.core_text_font.get_string_by_name_key(CTFontNameSpecifier::Copyright)
+    }
+
+    #[inline]
+    fn license_info_url(&self) -> Option<String> {
+        self.core_text_font.get_string_by_name_key(CTFontNameSpecifier::Copyright)
+    }
+
+    #[inline]
+    fn sample_text(&self) -> Option<String> {
+        self.core_text_font.get_string_by_name_key(CTFontNameSpecifier::Copyright)
     }
 
     /// Returns true if and only if the font is monospace (fixed-width).
@@ -660,6 +720,66 @@ impl Loader for Font {
     #[inline]
     fn family_name(&self) -> String {
         self.family_name()
+    }
+
+    #[inline]
+    fn copyright_notice(&self) -> Option<String> {
+        self.copyright_notice()
+    }
+
+    #[inline]
+    fn subfamily_name(&self) -> Option<String> {
+        self.subfamily_name()
+    }
+
+    #[inline]
+    fn version(&self) -> Option<String> {
+        self.version()
+    }
+
+    #[inline]
+    fn trademark(&self) -> Option<String> {
+        self.trademark()
+    }
+
+    #[inline]
+    fn manufacturer(&self) -> Option<String> {
+        self.manufacturer()
+    }
+
+    #[inline]
+    fn designer(&self) -> Option<String> {
+        self.designer()
+    }
+
+    #[inline]
+    fn description(&self) -> Option<String> {
+        self.description()
+    }
+
+    #[inline]
+    fn vendor_url(&self) -> Option<String> {
+        self.vendor_url()
+    }
+
+    #[inline]
+    fn designer_url(&self) -> Option<String> {
+        self.designer_url()
+    }
+
+    #[inline]
+    fn license_description(&self) -> Option<String> {
+        self.license_description()
+    }
+
+    #[inline]
+    fn license_info_url(&self) -> Option<String> {
+        self.license_info_url()
+    }
+
+    #[inline]
+    fn sample_text(&self) -> Option<String> {
+        self.sample_text()
     }
 
     #[inline]

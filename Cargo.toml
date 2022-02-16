@@ -50,9 +50,9 @@ version = "0.3"
 features = ["dwrite", "minwindef", "sysinfoapi", "winbase", "winnt"]
 
 [target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]
-core-foundation = "0.9"
-core-graphics = "0.22"
-core-text = "19.1.0"
+core-foundation = { git = "https://github.com/ssssota/core-foundation-rs.git" }
+core-graphics = { git = "https://github.com/ssssota/core-foundation-rs.git" }
+core-text = { git = "https://github.com/ssssota/core-foundation-rs.git" }
 
 [target.'cfg(not(any(target_family = "windows", target_os = "macos", target_os = "ios")))'.dependencies]
 freetype = "0.7"
