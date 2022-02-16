@@ -43,16 +43,16 @@ pbr = "1.0"
 prettytable-rs = "0.8"
 
 [target.'cfg(target_family = "windows")'.dependencies]
-dwrote = { git = "https://github.com/ssssota/dwrote-rs.git", default-features = false }
+dwrote = {git = "https://github.com/ssssota/dwrote-rs.git", rev = "7d1e9a589bbe18976b81cd881529df8729fa1c0a", default-features = false}
 
 [target.'cfg(target_family = "windows")'.dependencies.winapi]
 version = "0.3"
 features = ["dwrite", "minwindef", "sysinfoapi", "winbase", "winnt"]
 
 [target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]
-core-foundation = { git = "https://github.com/ssssota/core-foundation-rs.git" }
-core-graphics = { git = "https://github.com/ssssota/core-foundation-rs.git" }
-core-text = { git = "https://github.com/ssssota/core-foundation-rs.git" }
+core-foundation = {git = "https://github.com/ssssota/core-foundation-rs.git", rev = "b0e0dd8bf456a22f32cb6779a169bd66e7d7a134"}
+core-graphics = {git = "https://github.com/ssssota/core-foundation-rs.git", rev = "b0e0dd8bf456a22f32cb6779a169bd66e7d7a134"}
+core-text = {git = "https://github.com/ssssota/core-foundation-rs.git", rev = "b0e0dd8bf456a22f32cb6779a169bd66e7d7a134"}
 
 [target.'cfg(not(any(target_family = "windows", target_os = "macos", target_os = "ios")))'.dependencies]
 freetype = "0.7"
