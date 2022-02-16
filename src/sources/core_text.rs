@@ -204,7 +204,7 @@ fn create_handles_from_core_text_collection(
                         {
                             if let Some(font_postscript_name) = font.postscript_name() {
                                 if postscript_name == font_postscript_name {
-                                    fonts.push(Handle::from_memory(data_info.data, font_index));
+                                    fonts.push(Handle::from_path(font_path, font_index));
                                     continue 'outer;
                                 }
                             }
@@ -212,7 +212,7 @@ fn create_handles_from_core_text_collection(
                     }
                 }
                 FileType::Single => {
-                    fonts.push(Handle::from_memory(data_info.data, 0));
+                    fonts.push(Handle::from_path(font_path, 0));
                 }
             }
         }
