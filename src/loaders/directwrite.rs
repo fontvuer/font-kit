@@ -231,6 +231,78 @@ impl Font {
         self.dwrite_font.family_name()
     }
 
+    #[inline]
+    fn copyright_notice(&self) -> Option<String> {
+        self.dwrite_font
+            .informational_string(DWriteInformationalStringId::CopyrightNotice)
+    }
+
+    #[inline]
+    fn subfamily_name(&self) -> Option<String> {
+        self.dwrite_font
+            .informational_string(DWriteInformationalStringId::PreferredSubfamilyNames)
+    }
+
+    #[inline]
+    fn version(&self) -> Option<String> {
+        self.dwrite_font
+            .informational_string(DWriteInformationalStringId::Version)
+    }
+
+    #[inline]
+    fn trademark(&self) -> Option<String> {
+        self.dwrite_font
+            .informational_string(DWriteInformationalStringId::Trademark)
+    }
+
+    #[inline]
+    fn manufacturer(&self) -> Option<String> {
+        self.dwrite_font
+            .informational_string(DWriteInformationalStringId::Manufacturer)
+    }
+
+    #[inline]
+    fn designer(&self) -> Option<String> {
+        self.dwrite_font
+            .informational_string(DWriteInformationalStringId::Designer)
+    }
+
+    #[inline]
+    fn description(&self) -> Option<String> {
+        self.dwrite_font
+            .informational_string(DWriteInformationalStringId::Description)
+    }
+
+    #[inline]
+    fn vendor_url(&self) -> Option<String> {
+        self.dwrite_font
+            .informational_string(DWriteInformationalStringId::VendorUrl)
+    }
+
+    #[inline]
+    fn designer_url(&self) -> Option<String> {
+        self.dwrite_font
+            .informational_string(DWriteInformationalStringId::DesignerUrl)
+    }
+
+    #[inline]
+    fn license_description(&self) -> Option<String> {
+        self.dwrite_font
+            .informational_string(DWriteInformationalStringId::LicenseDescription)
+    }
+
+    #[inline]
+    fn license_info_url(&self) -> Option<String> {
+        self.dwrite_font
+            .informational_string(DWriteInformationalStringId::LicenseInfoUrl)
+    }
+
+    #[inline]
+    fn sample_text(&self) -> Option<String> {
+        self.dwrite_font
+            .informational_string(DWriteInformationalStringId::SampleText)
+    }
+
     /// Returns true if and only if the font is monospace (fixed-width).
     #[inline]
     pub fn is_monospace(&self) -> bool {
@@ -779,6 +851,66 @@ impl Loader for Font {
     #[inline]
     fn family_name(&self) -> String {
         self.family_name()
+    }
+
+    #[inline]
+    fn copyright_notice(&self) -> Option<String> {
+        self.copyright_notice()
+    }
+
+    #[inline]
+    fn subfamily_name(&self) -> Option<String> {
+        self.subfamily_name()
+    }
+
+    #[inline]
+    fn version(&self) -> Option<String> {
+        self.version()
+    }
+
+    #[inline]
+    fn trademark(&self) -> Option<String> {
+        self.trademark()
+    }
+
+    #[inline]
+    fn manufacturer(&self) -> Option<String> {
+        self.manufacturer()
+    }
+
+    #[inline]
+    fn designer(&self) -> Option<String> {
+        self.designer()
+    }
+
+    #[inline]
+    fn description(&self) -> Option<String> {
+        self.description()
+    }
+
+    #[inline]
+    fn vendor_url(&self) -> Option<String> {
+        self.vendor_url()
+    }
+
+    #[inline]
+    fn designer_url(&self) -> Option<String> {
+        self.designer_url()
+    }
+
+    #[inline]
+    fn license_description(&self) -> Option<String> {
+        self.license_description()
+    }
+
+    #[inline]
+    fn license_info_url(&self) -> Option<String> {
+        self.license_info_url()
+    }
+
+    #[inline]
+    fn sample_text(&self) -> Option<String> {
+        self.sample_text()
     }
 
     #[inline]

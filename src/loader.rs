@@ -103,14 +103,53 @@ pub trait Loader: Clone + Sized {
     /// Returns the wrapped native font handle.
     fn native_font(&self) -> Self::NativeFont;
 
-    /// Returns the PostScript name of the font. This should be globally unique.
-    fn postscript_name(&self) -> Option<String>;
+    /// Returns the copyright notice of the font. (name_id=0)
+    fn copyright_notice(&self) -> Option<String>;
 
-    /// Returns the full name of the font (also known as "display name" on macOS).
+    /// Returns the name of the font family. (name_id=1)
+    fn family_name(&self) -> String;
+
+    /// Returns the name of the font subfamily. (name_id=2)
+    fn subfamily_name(&self) -> Option<String>;
+
+    // /// Returns the unique identifier of the font. (name_id=3)
+    // fn unique_id(&self) -> Option<String>;
+
+    /// Returns the full name of the font (also known as "display name" on macOS). (name_id=4)
     fn full_name(&self) -> String;
 
-    /// Returns the name of the font family.
-    fn family_name(&self) -> String;
+    /// Returns the version of the font. (name_id=5)
+    fn version(&self) -> Option<String>;
+
+    /// Returns the PostScript name of the font. This should be globally unique. (name_id=6)
+    fn postscript_name(&self) -> Option<String>;
+
+    /// Returns the trademark of the font. (name_id=7)
+    fn trademark(&self) -> Option<String>;
+
+    /// Returns the manufacturer name of the font. (name_id=8)
+    fn manufacturer(&self) -> Option<String>;
+
+    /// Returns the designer name of the font. (name_id=9)
+    fn designer(&self) -> Option<String>;
+
+    /// Returns the description of the font. (name_id=10)
+    fn description(&self) -> Option<String>;
+
+    /// Returns the vendor url of the font. (name_id=11)
+    fn vendor_url(&self) -> Option<String>;
+
+    /// Returns the designer url of the font. (name_id=12)
+    fn designer_url(&self) -> Option<String>;
+
+    /// Returns the license description of the font. (name_id=13)
+    fn license_description(&self) -> Option<String>;
+
+    /// Returns the license info url of the font. (name_id=14)
+    fn license_info_url(&self) -> Option<String>;
+
+    /// Returns the sample text of the font. (name_id=19)
+    fn sample_text(&self) -> Option<String>;
 
     /// Returns true if and only if the font is monospace (fixed-width).
     fn is_monospace(&self) -> bool;
