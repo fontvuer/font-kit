@@ -58,8 +58,37 @@ use std::fs::File;
 #[cfg(not(target_arch = "wasm32"))]
 use std::path::Path;
 
+// https://freetype.org/freetype2/docs/reference/ft2-type1_tables.html#ps_dict_keys
+const PS_DICT_VERSION: u32 = 36;
+const PS_DICT_NOTICE: u32 = 37;
 const PS_DICT_FULL_NAME: u32 = 38;
-const TT_NAME_ID_FULL_NAME: u16 = 4;
+// https://docs.microsoft.com/en-us/typography/opentype/spec/name
+const TT_NAME_ID_COPYRIGHT_NOTICE: u16                     = 0;
+// const TT_NAME_ID_FAMILY: u16                               = 1;
+const TT_NAME_ID_SUBFAMILY: u16                            = 2;
+// const TT_NAME_ID_UNIQUE_ID: u16                            = 3;
+const TT_NAME_ID_FULL_NAME: u16                            = 4;
+const TT_NAME_ID_VERSION: u16                              = 5;
+// const TT_NAME_ID_POST_SCRIPT_NAME: u16                     = 6;
+const TT_NAME_ID_TRADEMARK: u16                            = 7;
+const TT_NAME_ID_MANUFACTURER: u16                         = 8;
+const TT_NAME_ID_DESIGNER: u16                             = 9;
+const TT_NAME_ID_DESCRIPTION: u16                          = 10;
+const TT_NAME_ID_VENDOR_URL: u16                           = 11;
+const TT_NAME_ID_DESIGNER_URL: u16                         = 12;
+const TT_NAME_ID_LICENSE: u16                              = 13;
+const TT_NAME_ID_LICENSE_URL: u16                          = 14;
+//        RESERVED                                         = 15
+// const TT_NAME_ID_TYPOGRAPHIC_FAMILY: u16                   = 16;
+// const TT_NAME_ID_TYPOGRAPHIC_SUBFAMILY: u16                = 17;
+// const TT_NAME_ID_COMPATIBLE_FULL: u16                      = 18;
+const TT_NAME_ID_SAMPLE_TEXT: u16                          = 19;
+// const TT_NAME_ID_POST_SCRIPT_CID: u16                      = 20;
+// const TT_NAME_ID_WWS_FAMILY: u16                           = 21;
+// const TT_NAME_ID_WWS_SUBFAMILY: u16                        = 22;
+// const TT_NAME_ID_LIGHT_BACKGROUND_PALETTE: u16             = 23;
+// const TT_NAME_ID_DARK_BACKGROUND_PALETTE: u16              = 24;
+// const TT_NAME_ID_VARIATIONS_POST_SCRIPT_NAME_PREFIX: u16   = 25;
 
 const TT_PLATFORM_APPLE_UNICODE: u16 = 0;
 
@@ -321,7 +350,8 @@ impl Font {
 
     /// Returns the full name of the font (also known as "display name" on macOS).
     pub fn full_name(&self) -> String {
-        self.get_type_1_or_sfnt_name(PS_DICT_FULL_NAME, TT_NAME_ID_FULL_NAME)
+        self.get_type_1_table(PS_DICT_FULL_NAME)
+            .or(self.get_sfnt_name(TT_NAME_ID_FULL_NAME))
             .unwrap_or_else(|| self.family_name())
     }
 
@@ -336,6 +366,69 @@ impl Font {
                 CStr::from_ptr(ptr).to_str().unwrap().to_owned()
             }
         }
+    }
+
+    /// Returns the notice of the font
+    pub fn copyright_notice(&self) -> Option<String> {
+        self.get_type_1_table(PS_DICT_NOTICE)
+            .or(self.get_sfnt_name(TT_NAME_ID_COPYRIGHT_NOTICE))
+    }
+
+    #[inline]
+    fn subfamily_name(&self) -> Option<String> {
+        self.get_sfnt_name(TT_NAME_ID_SUBFAMILY)
+    }
+
+    /// Returns the version of the font
+    #[inline]
+    fn version(&self) -> Option<String> {
+        self.get_type_1_table(PS_DICT_VERSION)
+            .or(self.get_sfnt_name(TT_NAME_ID_VERSION))
+    }
+
+    #[inline]
+    fn trademark(&self) -> Option<String> {
+        self.get_sfnt_name(TT_NAME_ID_TRADEMARK)
+    }
+
+    #[inline]
+    fn manufacturer(&self) -> Option<String> {
+        self.get_sfnt_name(TT_NAME_ID_MANUFACTURER)
+    }
+
+    #[inline]
+    fn designer(&self) -> Option<String> {
+        self.get_sfnt_name(TT_NAME_ID_DESIGNER)
+    }
+
+    #[inline]
+    fn description(&self) -> Option<String> {
+        self.get_sfnt_name(TT_NAME_ID_DESCRIPTION)
+    }
+
+    #[inline]
+    fn vendor_url(&self) -> Option<String> {
+        self.get_sfnt_name(TT_NAME_ID_VENDOR_URL)
+    }
+
+    #[inline]
+    fn designer_url(&self) -> Option<String> {
+        self.get_sfnt_name(TT_NAME_ID_DESIGNER_URL)
+    }
+
+    #[inline]
+    fn license_description(&self) -> Option<String> {
+        self.get_sfnt_name(TT_NAME_ID_LICENSE)
+    }
+
+    #[inline]
+    fn license_info_url(&self) -> Option<String> {
+        self.get_sfnt_name(TT_NAME_ID_LICENSE_URL)
+    }
+
+    #[inline]
+    fn sample_text(&self) -> Option<String> {
+        self.get_sfnt_name(TT_NAME_ID_SAMPLE_TEXT)
     }
 
     /// Returns true if and only if the font is monospace (fixed-width).
@@ -690,10 +783,10 @@ impl Font {
         }
     }
 
-    fn get_type_1_or_sfnt_name(&self, type_1_id: u32, sfnt_id: u16) -> Option<String> {
+    fn get_type_1_table(&self, type_1_id: u32) -> Option<String> {
         unsafe {
             let ps_value_size =
-                FT_Get_PS_Font_Value(self.freetype_face, type_1_id, 0, ptr::null_mut(), 0);
+            FT_Get_PS_Font_Value(self.freetype_face, type_1_id, 0, ptr::null_mut(), 0);
             if ps_value_size > 0 {
                 let mut buffer = vec![0; ps_value_size as usize];
                 if FT_Get_PS_Font_Value(
@@ -707,7 +800,11 @@ impl Font {
                     return String::from_utf8(buffer).ok();
                 }
             }
-
+        }
+        None
+    }
+    fn get_sfnt_name(&self, sfnt_id: u16) -> Option<String> {
+        unsafe {
             let sfnt_name_count = FT_Get_Sfnt_Name_Count(self.freetype_face);
             let mut sfnt_name = mem::zeroed();
             for sfnt_name_index in 0..sfnt_name_count {
@@ -718,7 +815,7 @@ impl Font {
                 if sfnt_name.name_id != sfnt_id {
                     continue;
                 }
-
+    
                 match (sfnt_name.platform_id, sfnt_name.encoding_id) {
                     (TT_PLATFORM_APPLE_UNICODE, _) => {
                         let mut sfnt_name_bytes =
@@ -740,9 +837,8 @@ impl Font {
                     }
                 }
             }
-
-            None
         }
+        None
     }
 
     fn get_os2_table(&self) -> Option<*const TT_OS2> {
@@ -1030,6 +1126,66 @@ impl Loader for Font {
     #[inline]
     fn family_name(&self) -> String {
         self.family_name()
+    }
+
+    #[inline]
+    fn copyright_notice(&self) -> Option<String> {
+        self.copyright_notice()
+    }
+
+    #[inline]
+    fn subfamily_name(&self) -> Option<String> {
+        self.subfamily_name()
+    }
+
+    #[inline]
+    fn version(&self) -> Option<String> {
+        self.version()
+    }
+
+    #[inline]
+    fn trademark(&self) -> Option<String> {
+        self.trademark()
+    }
+
+    #[inline]
+    fn manufacturer(&self) -> Option<String> {
+        self.manufacturer()
+    }
+
+    #[inline]
+    fn designer(&self) -> Option<String> {
+        self.designer()
+    }
+
+    #[inline]
+    fn description(&self) -> Option<String> {
+        self.description()
+    }
+
+    #[inline]
+    fn vendor_url(&self) -> Option<String> {
+        self.vendor_url()
+    }
+
+    #[inline]
+    fn designer_url(&self) -> Option<String> {
+        self.designer_url()
+    }
+
+    #[inline]
+    fn license_description(&self) -> Option<String> {
+        self.license_description()
+    }
+
+    #[inline]
+    fn license_info_url(&self) -> Option<String> {
+        self.license_info_url()
+    }
+
+    #[inline]
+    fn sample_text(&self) -> Option<String> {
+        self.sample_text()
     }
 
     #[inline]
