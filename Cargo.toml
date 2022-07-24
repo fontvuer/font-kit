@@ -51,9 +51,9 @@ version = "0.3"
 features = ["dwrite", "minwindef", "sysinfoapi", "winbase", "winnt"]
 
 [target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]
-core-foundation = {git = "https://github.com/servo/core-foundation-rs.git", rev = "079665882507dd5e2ff77db3de5070c1f6c0fb85"}
-core-graphics = {git = "https://github.com/servo/core-foundation-rs.git", rev = "079665882507dd5e2ff77db3de5070c1f6c0fb85"}
-core-text = {git = "https://github.com/servo/core-foundation-rs.git", rev = "079665882507dd5e2ff77db3de5070c1f6c0fb85"}
+core-foundation = {git = "https://github.com/servo/core-foundation-rs.git", rev = "75f99cf648885c180c7ccfb9b6d55eae259e1d71"}
+core-graphics = {git = "https://github.com/servo/core-foundation-rs.git", rev = "75f99cf648885c180c7ccfb9b6d55eae259e1d71"}
+core-text = {git = "https://github.com/servo/core-foundation-rs.git", rev = "75f99cf648885c180c7ccfb9b6d55eae259e1d71"}
 
 [target.'cfg(not(any(target_family = "windows", target_os = "macos", target_os = "ios")))'.dependencies]
 freetype = "0.7"
