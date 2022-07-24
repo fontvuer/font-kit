@@ -63,32 +63,32 @@ const PS_DICT_VERSION: u32 = 36;
 const PS_DICT_NOTICE: u32 = 37;
 const PS_DICT_FULL_NAME: u32 = 38;
 // https://docs.microsoft.com/en-us/typography/opentype/spec/name
-const TT_NAME_ID_COPYRIGHT_NOTICE: u16                     = 0;
-// const TT_NAME_ID_FAMILY: u16                               = 1;
-const TT_NAME_ID_SUBFAMILY: u16                            = 2;
-// const TT_NAME_ID_UNIQUE_ID: u16                            = 3;
-const TT_NAME_ID_FULL_NAME: u16                            = 4;
-const TT_NAME_ID_VERSION: u16                              = 5;
-// const TT_NAME_ID_POST_SCRIPT_NAME: u16                     = 6;
-const TT_NAME_ID_TRADEMARK: u16                            = 7;
-const TT_NAME_ID_MANUFACTURER: u16                         = 8;
-const TT_NAME_ID_DESIGNER: u16                             = 9;
-const TT_NAME_ID_DESCRIPTION: u16                          = 10;
-const TT_NAME_ID_VENDOR_URL: u16                           = 11;
-const TT_NAME_ID_DESIGNER_URL: u16                         = 12;
-const TT_NAME_ID_LICENSE: u16                              = 13;
-const TT_NAME_ID_LICENSE_URL: u16                          = 14;
-//        RESERVED                                         = 15
-// const TT_NAME_ID_TYPOGRAPHIC_FAMILY: u16                   = 16;
-// const TT_NAME_ID_TYPOGRAPHIC_SUBFAMILY: u16                = 17;
-// const TT_NAME_ID_COMPATIBLE_FULL: u16                      = 18;
-const TT_NAME_ID_SAMPLE_TEXT: u16                          = 19;
-// const TT_NAME_ID_POST_SCRIPT_CID: u16                      = 20;
-// const TT_NAME_ID_WWS_FAMILY: u16                           = 21;
-// const TT_NAME_ID_WWS_SUBFAMILY: u16                        = 22;
-// const TT_NAME_ID_LIGHT_BACKGROUND_PALETTE: u16             = 23;
-// const TT_NAME_ID_DARK_BACKGROUND_PALETTE: u16              = 24;
-// const TT_NAME_ID_VARIATIONS_POST_SCRIPT_NAME_PREFIX: u16   = 25;
+const TT_NAME_ID_COPYRIGHT_NOTICE: u16 = 0;
+// const TT_NAME_ID_FAMILY: u16 = 1;
+const TT_NAME_ID_SUBFAMILY: u16 = 2;
+// const TT_NAME_ID_UNIQUE_ID: u16 = 3;
+const TT_NAME_ID_FULL_NAME: u16 = 4;
+const TT_NAME_ID_VERSION: u16 = 5;
+// const TT_NAME_ID_POST_SCRIPT_NAME: u16 = 6;
+const TT_NAME_ID_TRADEMARK: u16 = 7;
+const TT_NAME_ID_MANUFACTURER: u16 = 8;
+const TT_NAME_ID_DESIGNER: u16 = 9;
+const TT_NAME_ID_DESCRIPTION: u16 = 10;
+const TT_NAME_ID_VENDOR_URL: u16 = 11;
+const TT_NAME_ID_DESIGNER_URL: u16 = 12;
+const TT_NAME_ID_LICENSE: u16 = 13;
+const TT_NAME_ID_LICENSE_URL: u16 = 14;
+// RESERVED = 15
+// const TT_NAME_ID_TYPOGRAPHIC_FAMILY: u16 = 16;
+// const TT_NAME_ID_TYPOGRAPHIC_SUBFAMILY: u16 = 17;
+// const TT_NAME_ID_COMPATIBLE_FULL: u16 = 18;
+const TT_NAME_ID_SAMPLE_TEXT: u16 = 19;
+// const TT_NAME_ID_POST_SCRIPT_CID: u16 = 20;
+// const TT_NAME_ID_WWS_FAMILY: u16 = 21;
+// const TT_NAME_ID_WWS_SUBFAMILY: u16 = 22;
+// const TT_NAME_ID_LIGHT_BACKGROUND_PALETTE: u16 = 23;
+// const TT_NAME_ID_DARK_BACKGROUND_PALETTE: u16 = 24;
+// const TT_NAME_ID_VARIATIONS_POST_SCRIPT_NAME_PREFIX: u16 = 25;
 
 const TT_PLATFORM_APPLE_UNICODE: u16 = 0;
 
@@ -786,7 +786,7 @@ impl Font {
     fn get_type_1_table(&self, type_1_id: u32) -> Option<String> {
         unsafe {
             let ps_value_size =
-            FT_Get_PS_Font_Value(self.freetype_face, type_1_id, 0, ptr::null_mut(), 0);
+                FT_Get_PS_Font_Value(self.freetype_face, type_1_id, 0, ptr::null_mut(), 0);
             if ps_value_size > 0 {
                 let mut buffer = vec![0; ps_value_size as usize];
                 if FT_Get_PS_Font_Value(
@@ -815,7 +815,7 @@ impl Font {
                 if sfnt_name.name_id != sfnt_id {
                     continue;
                 }
-    
+
                 match (sfnt_name.platform_id, sfnt_name.encoding_id) {
                     (TT_PLATFORM_APPLE_UNICODE, _) => {
                         let mut sfnt_name_bytes =
