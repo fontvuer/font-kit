@@ -44,16 +44,16 @@ pbr = "1.0"
 prettytable-rs = "0.8"
 
 [target.'cfg(target_family = "windows")'.dependencies]
-dwrote = {git = "https://github.com/ssssota/dwrote-rs.git", rev = "7d1e9a589bbe18976b81cd881529df8729fa1c0a", default-features = false}
+dwrote = {git = "https://github.com/servo/dwrote-rs.git", rev = "fdc49fdc4ee95dd622079b0c3b0ab82dfa6dacae", default-features = false}
 
 [target.'cfg(target_family = "windows")'.dependencies.winapi]
 version = "0.3"
 features = ["dwrite", "minwindef", "sysinfoapi", "winbase", "winnt"]
 
 [target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]
-core-foundation = {git = "https://github.com/servo/core-foundation-rs.git", rev = "75f99cf648885c180c7ccfb9b6d55eae259e1d71"}
-core-graphics = {git = "https://github.com/servo/core-foundation-rs.git", rev = "75f99cf648885c180c7ccfb9b6d55eae259e1d71"}
-core-text = {git = "https://github.com/servo/core-foundation-rs.git", rev = "75f99cf648885c180c7ccfb9b6d55eae259e1d71"}
+core-foundation = {git = "https://github.com/servo/core-foundation-rs.git", rev = "614d43aa54ffa595f9cfc394cd65ead886235d99"}
+core-graphics = {git = "https://github.com/servo/core-foundation-rs.git", rev = "614d43aa54ffa595f9cfc394cd65ead886235d99"}
+core-text = {git = "https://github.com/servo/core-foundation-rs.git", rev = "614d43aa54ffa595f9cfc394cd65ead886235d99"}
 
 [target.'cfg(not(any(target_family = "windows", target_os = "macos", target_os = "ios")))'.dependencies]
 freetype = "0.7"
